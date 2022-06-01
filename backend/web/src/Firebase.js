@@ -2,21 +2,21 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 const firebaseConfig = {
-  apiKey: "AIzaSyAJ47Ipr7MfCp3fEHrYcyySebPoAP3kCCc",
+  apiKey: "AIzaSyDLYmfSliEilDv2sPl_Nyi2AzDOlmAtJq4",
 
-  authDomain: "missing-person-finder-8e324.firebaseapp.com",
+  authDomain: "missingperson-28ad0.firebaseapp.com",
 
-  databaseURL: "https://missing-person-finder-8e324-default-rtdb.firebaseio.com",
+  databaseURL: "https://missingperson-28ad0-default-rtdb.firebaseio.com",
 
-  projectId: "missing-person-finder-8e324",
+  projectId: "missingperson-28ad0",
 
-  storageBucket: "missing-person-finder-8e324.appspot.com",
+  storageBucket: "missingperson-28ad0.appspot.com",
 
-  messagingSenderId: "998844085131",
+  messagingSenderId: "684326167777",
 
-  appId: "1:998844085131:web:df150b398ffe5e84e1758e",
+  appId: "1:684326167777:web:034e56d781e5690d8b83a0",
 
-  measurementId: "G-3GJNXKWV2J"
+  measurementId: "G-547ZVZDCW7"
 
   };
   const firebaseApp = firebase.initializeApp(firebaseConfig);

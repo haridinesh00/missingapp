@@ -11,18 +11,22 @@ function Register() {
     const [age, SetAge] = useState(null);
     const [gender, setGender] = useState('');
     const [region,SetRegion]=useState('');
+    const [height,SetHeight]=useState('');
+    const [weight,SetWeight]=useState('');
+    const [colour,SetColour]=useState('');
+    const [lastseen,SetLastseen]=useState('');
     const [des,SetDes]=useState('');
     const [file,setFile] = useState(null);
-    const [urls,setUrls] = useState({});
     const[value,setValue] =useState(0)
     let dt= new Date()
-    console.log(dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate())
+    
     const imagehandle =(e)=>{
         const datas=[]
+        if(e.currentTarget.files.length >=3){
         for(let i =0; i<e.currentTarget.files.length;i++){
             const v= e.currentTarget.files[i]
             datas.push(v)
-        }
+        }}else{ toast.info('Upload atleast 3 photos, recommended: 5',{position: toast.POSITION.TOP_CENTER})}
         setFile(datas)
         setValue(1)
     }
@@ -57,7 +61,11 @@ function Register() {
                         'gender':gender,
                         'lastname':Lname,
                         'region':region,
-                        'reportingdate':dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate(),
+                        'height':height,
+                        'weight':weight,
+                        'color':colour,
+                        'lastseen':lastseen,
+                        'reportingdate':dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear(),
                         'url':url.toString()
 
                     })
@@ -72,7 +80,16 @@ function Register() {
 
         })
         .catch((err)=> toast.error(`${err}`,{autoClose:10000,position: toast.POSITION.TOP_CENTER}))
-        
+        SetFname('')
+        SetLname('')
+        SetAge('')
+        SetRegion('')
+        SetHeight('')
+        SetWeight('')
+        SetLastseen('')
+        SetColour('')
+        SetDes('') 
+        e.target.reset();      
         /*
         firebaseApp.storage().ref(`images/${file.name}`).put(file).then(({ref})=>{
     
@@ -164,6 +181,38 @@ function Register() {
             </div>
             <div className="row">
             <div className="col-25">
+                <label for="country">Height</label>
+            </div>
+            <div className="col-75">
+                <input type="text" value={height} onChange={e=> SetHeight(e.currentTarget.value)} id="region" name="region" placeholder="height" required/>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-25">
+                <label for="country">Weight</label>
+            </div>
+            <div className="col-75">
+                <input type="text" value={weight} onChange={e=> SetWeight(e.currentTarget.value)} id="region" name="region" placeholder="weight" required/>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-25">
+                <label for="country">Skin Colour</label>
+            </div>
+            <div className="col-75">
+                <input type="text" value={colour} onChange={e=> SetColour(e.currentTarget.value)} id="region" name="region" placeholder="skin color" required/>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-25">
+                <label for="country">Lastseen</label>
+            </div>
+            <div className="col-75">
+                <input type="text" value={lastseen} onChange={e=> SetLastseen(e.currentTarget.value)} id="region" name="region" placeholder="last seen" required/>
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-25">
                 <label for="description">Description</label>
             </div>
             <div className="col-75">
@@ -184,5 +233,6 @@ function Register() {
         );
     
 }
+
 
 export default Register;

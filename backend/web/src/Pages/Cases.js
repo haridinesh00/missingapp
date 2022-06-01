@@ -1,5 +1,6 @@
 import React,{useContext, useEffect, useState} from 'react';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button'
 import firebaseApp from '../Firebase';
 import 'firebase/compat/database';
 import {useNavigate} from 'react-router-dom';
@@ -56,6 +57,7 @@ const Cases = () => {
                 <Card.Img variant="top" src={missdata.url} height='250px'/>
                 <Card.Body>
                   <Card.Title style={{'text-align':'center'}}>{missdata.firstname + ' '+missdata.lastname}</Card.Title>
+                  <Button variant="outline-dark" size='sm' style={{marginLeft:'40px'}}>Delete Case</Button>
                 </Card.Body>
               </Card>
             })

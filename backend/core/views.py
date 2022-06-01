@@ -36,7 +36,7 @@ from django.views.decorators.csrf import csrf_exempt
 cred = credentials.Certificate(r"/home/hari/Desktop/serviceaccountkey.json")
 
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://missing-person-finder-8e324-default-rtdb.firebaseio.com'
+    'databaseURL': 'https://missingperson-28ad0-default-rtdb.firebaseio.com'
 })
 
 #firebase_admin.initialize_app(cred)
@@ -146,28 +146,48 @@ def match(request, *args, **kwargs):
     X1 = list()
     X1.extend(face1)
     trainX1 = asarray(X1)
-    trainX1= expand_dims(trainX1, axis=0)
+    #trainX1= expand_dims(trainX1, axis=0)
     print(trainX.shape)
     savez_compressed('pikachu-faces-dataset.npz', trainX1)
     model1 = load_model('facenet_keras.h5')
     print('Loaded Model')
     newTrainX1= list()
     print("made list")
+    '''
     for face_pixels1 in trainX1:
         embedding1 = get_embedding(model1, face_pixels1)
         newTrainX1.append(embedding1)
+    '''
+    embedding1 = get_embedding(model1, trainX1)
+    newTrainX1.append(embedding1)
+
     newTrainX1= asarray(newTrainX1)
-    print(newTrainX1.shape)  
+
+    in_encoder = Normalizer(norm='l2')
+    newTrainX1 = in_encoder.transform(newTrainX1)
+
+
+    print(newTrainX1.shape) 
     yhat_class = model.predict(newTrainX1)
     predict_names = out_encoder.inverse_transform(yhat_class)
     yhat_prob = model.predict_proba(newTrainX1)
     class_index = yhat_class[0]
     class_probability = yhat_prob[0,class_index] * 100
-    print('Predicted: %s (%.3f)' % (predict_names[0], class_probability))
+    if(class_probability<40):
+        print("Match not found!!!")
+        print(class_probability)
+        print(predict_names[0])
+        return Response("False")
+    else:
+        print("\n ...............................................................................................................")
+        matched_data=stored_data[predict_names[0]]
+        print('Predicted: %s (%.3f)' % (predict_names[0], class_probability))
+        print("\n ...............................................................................................................")
+        return Response(matched_data)
     #embedded_data = newTrainX.tolist()
 
     print('done.............')
-    return Response("true")
+    
 class PostView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
@@ -244,7 +264,8 @@ class PostView(APIView):
         #print(embedded_data)
         #embedded_data = embedding.tolist()
 
-        print('done.............')
+        print('Successfully uploaded................................................................!!!')
+        
         # Adding encodings to firebase...............................................................
         '''
         users_ref.update({
