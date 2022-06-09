@@ -20,5 +20,9 @@ Reportedly, according to the NCRB data, 52.8% of missing women have been traced 
 
 The project that we have build helps to speed up the process of tracking and finding the missing people substantially.
 
+The process starts when the police uploads the image and other details of the missing person in the register page. This information is stored in the firebase realtime database. The registered cases can also be viewed from the view cases page.
 
+The user can now use the react native mobile application to view all the registered cases as well as report a suspecious person along with their location.
+
+The uploaded image by the user gets matched with all the regsiterd cases and if a match is found then it is stored in the database as well as shown in the matched cases page. It shall be notified to the police for immediate action.
 
